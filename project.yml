@@ -1,0 +1,46 @@
+name: EasyTree
+options:
+  bundleIdPrefix: com.krystofwoldrich
+  deploymentTarget:
+    macOS: "26.0"
+  xcodeVersion: "26.3"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+packages:
+  EasyTree:
+    path: .
+
+targets:
+  EasyTreeApp:
+    type: application
+    platform: macOS
+    sources:
+      - EasyTreeApp
+    dependencies:
+      - package: EasyTree
+        product: EasyTreeKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.krystofwoldrich.EasyTreeApp
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: 1
+        SWIFT_VERSION: "6.0"
+        CODE_SIGN_ENTITLEMENTS: EasyTreeApp/EasyTreeApp.entitlements
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        PRODUCT_NAME: EasyTree
+        MACOSX_DEPLOYMENT_TARGET: "26.0"
+    entitlements:
+      path: EasyTreeApp/EasyTreeApp.entitlements
+
+  EasyTreeAppTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/EasyTreeAppTests
+    dependencies:
+      - target: EasyTreeApp
+    settings:
+      base:
+        SWIFT_VERSION: "6.0"
+        MACOSX_DEPLOYMENT_TARGET: "26.0"

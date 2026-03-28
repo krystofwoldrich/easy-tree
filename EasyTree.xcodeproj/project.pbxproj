@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B6E0AAFC18423C32E7BC637 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E97BBA8CD93A5F580215D657 /* Assets.xcassets */; };
+		3DE7EA8DB695BA5EBAC69372 /* EasyTreeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */; };
+		547AB5F6C438C593CB42D924 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE441C0A27A999417F2D2DB /* ContentView.swift */; };
+		7B1FEE688A849470D35CB9F2 /* EasyTreeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */; };
+		D69236D53B5A2CA6875BC5BB /* EasyTreeKit in Frameworks */ = {isa = PBXBuildFile; productRef = F98405B17CF63A31B390793C /* EasyTreeKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		10F423810FD4CDBD29B54828 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AE6425EFBAEDA130F85D0DCA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3B2CD9AFDC6899441DD140FA;
+			remoteInfo = EasyTreeApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyTreeApp.entitlements; sourceTree = "<group>"; };
+		12728C98674949A83F6CA2EE /* EasyTreeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTreeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AE441C0A27A999417F2D2DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeAppTests.swift; sourceTree = "<group>"; };
+		B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeApp.swift; sourceTree = "<group>"; };
+		BB1E2FC5E4409402C004A071 /* easy-tree */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "easy-tree"; path = .; sourceTree = SOURCE_ROOT; };
+		E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyTreeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E97BBA8CD93A5F580215D657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD1AA4F291535C7AE74C1492 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D69236D53B5A2CA6875BC5BB /* EasyTreeKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0ECC6CA802AAF327AD936B10 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				12728C98674949A83F6CA2EE /* EasyTreeApp.app */,
+				E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4830E531A134F92318E1E11D /* EasyTreeApp */ = {
+			isa = PBXGroup;
+			children = (
+				E97BBA8CD93A5F580215D657 /* Assets.xcassets */,
+				7AE441C0A27A999417F2D2DB /* ContentView.swift */,
+				003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */,
+				B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */,
+			);
+			path = EasyTreeApp;
+			sourceTree = "<group>";
+		};
+		52860C9ACC901DB345267F38 = {
+			isa = PBXGroup;
+			children = (
+				4830E531A134F92318E1E11D /* EasyTreeApp */,
+				BD3A6487DD52F32CBF542167 /* Packages */,
+				7103C0AE80C70A26D0BE2D3D /* Tests */,
+				0ECC6CA802AAF327AD936B10 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5FC53C7623512CDFE6F6EDF3 /* EasyTreeAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */,
+			);
+			path = EasyTreeAppTests;
+			sourceTree = "<group>";
+		};
+		7103C0AE80C70A26D0BE2D3D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				5FC53C7623512CDFE6F6EDF3 /* EasyTreeAppTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		BD3A6487DD52F32CBF542167 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				BB1E2FC5E4409402C004A071 /* easy-tree */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3B2CD9AFDC6899441DD140FA /* EasyTreeApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A9491A94AD51D4F5BA4B59F /* Build configuration list for PBXNativeTarget "EasyTreeApp" */;
+			buildPhases = (
+				4B47EF17C634046DFE73FCEF /* Sources */,
+				2AC9AAF739B824ACB348B515 /* Resources */,
+				DD1AA4F291535C7AE74C1492 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EasyTreeApp;
+			packageProductDependencies = (
+				F98405B17CF63A31B390793C /* EasyTreeKit */,
+			);
+			productName = EasyTreeApp;
+			productReference = 12728C98674949A83F6CA2EE /* EasyTreeApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C0BBEE9E944B06625488C53E /* EasyTreeAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0ABEC4616C24B1C0B47E486 /* Build configuration list for PBXNativeTarget "EasyTreeAppTests" */;
+			buildPhases = (
+				ACFF92B43E78D0B230DF2074 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				85BB51C460E151CAFC2D45B4 /* PBXTargetDependency */,
+			);
+			name = EasyTreeAppTests;
+			packageProductDependencies = (
+			);
+			productName = EasyTreeAppTests;
+			productReference = E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AE6425EFBAEDA130F85D0DCA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2630;
+			};
+			buildConfigurationList = 7D90C2125176EDB6D6B7CA23 /* Build configuration list for PBXProject "EasyTree" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 52860C9ACC901DB345267F38;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5CD03A88C61194254A07250D /* XCLocalSwiftPackageReference "." */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B2CD9AFDC6899441DD140FA /* EasyTreeApp */,
+				C0BBEE9E944B06625488C53E /* EasyTreeAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2AC9AAF739B824ACB348B515 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B6E0AAFC18423C32E7BC637 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4B47EF17C634046DFE73FCEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				547AB5F6C438C593CB42D924 /* ContentView.swift in Sources */,
+				3DE7EA8DB695BA5EBAC69372 /* EasyTreeApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACFF92B43E78D0B230DF2074 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B1FEE688A849470D35CB9F2 /* EasyTreeAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		85BB51C460E151CAFC2D45B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3B2CD9AFDC6899441DD140FA /* EasyTreeApp */;
+			targetProxy = 10F423810FD4CDBD29B54828 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		32131411A3FE887B79D732D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeApp;
+				PRODUCT_NAME = EasyTree;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		52A7CAC45058394D080901BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeAppTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EasyTreeApp.app/Contents/MacOS/EasyTreeApp";
+			};
+			name = Release;
+		};
+		655326B7A7086F43318670B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B6EE9BD766E461757F8B916A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeApp;
+				PRODUCT_NAME = EasyTree;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		BF0049EA0847D251F2191F38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeAppTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EasyTreeApp.app/Contents/MacOS/EasyTreeApp";
+			};
+			name = Debug;
+		};
+		DE757586867835E54E9D6BA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A9491A94AD51D4F5BA4B59F /* Build configuration list for PBXNativeTarget "EasyTreeApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6EE9BD766E461757F8B916A /* Debug */,
+				32131411A3FE887B79D732D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7D90C2125176EDB6D6B7CA23 /* Build configuration list for PBXProject "EasyTree" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				655326B7A7086F43318670B1 /* Debug */,
+				DE757586867835E54E9D6BA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D0ABEC4616C24B1C0B47E486 /* Build configuration list for PBXNativeTarget "EasyTreeAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF0049EA0847D251F2191F38 /* Debug */,
+				52A7CAC45058394D080901BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5CD03A88C61194254A07250D /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F98405B17CF63A31B390793C /* EasyTreeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EasyTreeKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AE6425EFBAEDA130F85D0DCA /* Project object */;
+}
