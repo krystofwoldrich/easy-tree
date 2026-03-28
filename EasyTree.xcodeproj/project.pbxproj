@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyTreeApp.entitlements; sourceTree = "<group>"; };
-		12728C98674949A83F6CA2EE /* EasyTreeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTreeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		12728C98674949A83F6CA2EE /* EasyTree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AE441C0A27A999417F2D2DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeAppTests.swift; sourceTree = "<group>"; };
 		B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeApp.swift; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		0ECC6CA802AAF327AD936B10 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				12728C98674949A83F6CA2EE /* EasyTreeApp.app */,
+				12728C98674949A83F6CA2EE /* EasyTree.app */,
 				E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */,
 			);
 			name = Products;
@@ -121,7 +121,7 @@
 				F98405B17CF63A31B390793C /* EasyTreeKit */,
 			);
 			productName = EasyTreeApp;
-			productReference = 12728C98674949A83F6CA2EE /* EasyTreeApp.app */;
+			productReference = 12728C98674949A83F6CA2EE /* EasyTree.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C0BBEE9E944B06625488C53E /* EasyTreeAppTests */ = {
@@ -164,7 +164,6 @@
 			packageReferences = (
 				5CD03A88C61194254A07250D /* XCLocalSwiftPackageReference "." */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -219,8 +218,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9734H7B7Y9;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -230,6 +232,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeApp;
 				PRODUCT_NAME = EasyTree;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 6.0;
 			};
@@ -321,8 +324,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9734H7B7Y9;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -332,6 +338,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.krystofwoldrich.EasyTreeApp;
 				PRODUCT_NAME = EasyTree;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 6.0;
 			};
