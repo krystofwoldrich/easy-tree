@@ -27,6 +27,7 @@ targets:
         CURRENT_PROJECT_VERSION: 1
         SWIFT_VERSION: "6.0"
         CODE_SIGN_ENTITLEMENTS: EasyTreeApp/EasyTreeApp.entitlements
+        GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_GENERATION_MODE: GeneratedFile
         PRODUCT_NAME: EasyTree
         MACOSX_DEPLOYMENT_TARGET: "26.0"
