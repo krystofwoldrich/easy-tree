@@ -11,6 +11,18 @@ packages:
   EasyTree:
     path: .
 
+schemes:
+  EasyTreeApp:
+    build:
+      targets:
+        EasyTreeApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - EasyTreeAppTests
+
 targets:
   EasyTreeApp:
     type: application
