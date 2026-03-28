@@ -25,12 +25,20 @@ extension EasyTreeCLI {
             let config = try ConfigManager(baseDirectory: baseDir).load()
             let manager = WorktreeManager(baseDirectory: baseDir, config: config)
 
-            print("Fetching latest from origin...")
+            printErr("Fetching latest from origin...")
             let worktree = try manager.create(repo: repo)
 
-            print("Created worktree '\(worktree.name)' for '\(repo.name)'")
-            print("  Branch: \(worktree.branch)")
-            print("  Path:   \(worktree.path.path)")
+            printErr("Created worktree '\(worktree.name)' for '\(repo.name)'")
+            printErr("  Branch: \(worktree.branch)")
+            printErr("  Path:   \(worktree.path.path)")
+
+            // Print path to stdout for shell integration (cd "$(easy-tree create)")
+            print(worktree.path.path)
         }
     }
+
+}
+
+private func printErr(_ message: String) {
+    FileHandle.standardError.write(Data((message + "\n").utf8))
 }
