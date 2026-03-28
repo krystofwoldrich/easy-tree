@@ -28,7 +28,7 @@ public struct WorktreeManager: Sendable {
         let remoteBranch = try detectRemoteHead(git: git)
 
         // 3. Pick unique name
-        let treeName = try nameRegistry.claimName()
+        let treeName = try nameRegistry.claimName(from: config.resolvedNamingSet)
 
         // 4. Determine worktree path
         let worktreePath = baseDirectory

@@ -2,14 +2,21 @@ import Foundation
 
 public struct Config: Codable, Sendable {
     public var gitPath: String?
+    public var namingSet: NamingSet?
 
-    public init(gitPath: String? = nil) {
+    public init(gitPath: String? = nil, namingSet: NamingSet? = nil) {
         self.gitPath = gitPath
+        self.namingSet = namingSet
     }
 
     /// Resolved git executable path — uses config override or falls back to /usr/bin/git.
     public var resolvedGitPath: String {
         gitPath ?? "/usr/bin/git"
+    }
+
+    /// Resolved naming set — uses config override or falls back to cities.
+    public var resolvedNamingSet: NamingSet {
+        namingSet ?? .cities
     }
 }
 

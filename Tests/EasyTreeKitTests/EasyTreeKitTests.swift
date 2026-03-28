@@ -17,36 +17,41 @@ struct EasyTreeKitTests {
     }
 }
 
-@Suite("CityNames Tests")
-struct CityNamesTests {
-    @Test("City list is not empty")
-    func cityListNotEmpty() {
-        #expect(!CityNames.all.isEmpty)
+@Suite("NamingSet Tests")
+struct NamingSetTests {
+    @Test("All naming sets have entries", arguments: NamingSet.allCases)
+    func namingSetNotEmpty(namingSet: NamingSet) {
+        #expect(!namingSet.names.isEmpty)
     }
 
-    @Test("City list has at least 400 entries")
-    func cityListSize() {
-        #expect(CityNames.all.count >= 400)
+    @Test("All naming sets have at least 150 entries", arguments: NamingSet.allCases)
+    func namingSetMinimumSize(namingSet: NamingSet) {
+        #expect(namingSet.names.count >= 150, "\(namingSet) has only \(namingSet.names.count) entries")
     }
 
-    @Test("All city names are lowercase")
-    func allLowercase() {
-        for city in CityNames.all {
-            #expect(city == city.lowercased(), "City '\(city)' is not lowercase")
+    @Test("All names are lowercase", arguments: NamingSet.allCases)
+    func allLowercase(namingSet: NamingSet) {
+        for name in namingSet.names {
+            #expect(name == name.lowercased(), "'\(name)' in \(namingSet) is not lowercase")
         }
     }
 
-    @Test("All city names are unique")
-    func allUnique() {
-        let unique = Set(CityNames.all)
-        #expect(unique.count == CityNames.all.count, "Duplicate city names found")
+    @Test("All names are unique within set", arguments: NamingSet.allCases)
+    func allUniqueWithinSet(namingSet: NamingSet) {
+        let unique = Set(namingSet.names)
+        #expect(unique.count == namingSet.names.count, "Duplicate names found in \(namingSet)")
     }
 
-    @Test("City names contain no spaces")
-    func noSpaces() {
-        for city in CityNames.all {
-            #expect(!city.contains(" "), "City '\(city)' contains a space")
+    @Test("Names contain no spaces", arguments: NamingSet.allCases)
+    func noSpaces(namingSet: NamingSet) {
+        for name in namingSet.names {
+            #expect(!name.contains(" "), "'\(name)' in \(namingSet) contains a space")
         }
+    }
+
+    @Test("Cities has at least 400 entries")
+    func citiesSize() {
+        #expect(NamingSet.cities.names.count >= 400)
     }
 }
 
@@ -63,13 +68,13 @@ struct NameRegistryTests {
         try? FileManager.default.removeItem(at: url)
     }
 
-    @Test("Claim name returns a city name")
-    func claimNameReturnsCity() throws {
+    @Test("Claim name returns a name", arguments: NamingSet.allCases)
+    func claimNameReturnsName(namingSet: NamingSet) throws {
         let temp = try makeTempDirectory()
         defer { cleanup(temp) }
 
         let registry = NameRegistry(baseDirectory: temp)
-        let name = try registry.claimName()
+        let name = try registry.claimName(from: namingSet)
         #expect(!name.isEmpty)
     }
 
@@ -79,7 +84,7 @@ struct NameRegistryTests {
         defer { cleanup(temp) }
 
         let registry = NameRegistry(baseDirectory: temp)
-        let name = try registry.claimName()
+        let name = try registry.claimName(from: .cities)
         let usedNames = try registry.usedNames()
         #expect(usedNames[name] == 1)
     }
@@ -90,9 +95,22 @@ struct NameRegistryTests {
         defer { cleanup(temp) }
 
         let registry = NameRegistry(baseDirectory: temp)
-        let name1 = try registry.claimName()
-        let name2 = try registry.claimName()
+        let name1 = try registry.claimName(from: .cities)
+        let name2 = try registry.claimName(from: .cities)
         #expect(name1 != name2)
+    }
+
+    @Test("Names from different sets are tracked in same registry")
+    func crossSetTracking() throws {
+        let temp = try makeTempDirectory()
+        defer { cleanup(temp) }
+
+        let registry = NameRegistry(baseDirectory: temp)
+        let city = try registry.claimName(from: .cities)
+        let river = try registry.claimName(from: .rivers)
+        let usedNames = try registry.usedNames()
+        #expect(usedNames[city] == 1)
+        #expect(usedNames[river] == 1)
     }
 }
 
@@ -105,17 +123,20 @@ struct ConfigTests {
         return temp
     }
 
-    @Test("Default config has nil gitPath")
+    @Test("Default config has nil values")
     func defaultConfig() {
         let config = Config()
         #expect(config.gitPath == nil)
         #expect(config.resolvedGitPath == "/usr/bin/git")
+        #expect(config.namingSet == nil)
+        #expect(config.resolvedNamingSet == .cities)
     }
 
-    @Test("Config with custom git path")
-    func customGitPath() {
-        let config = Config(gitPath: "/opt/homebrew/bin/git")
+    @Test("Config with custom values")
+    func customConfig() {
+        let config = Config(gitPath: "/opt/homebrew/bin/git", namingSet: .mountains)
         #expect(config.resolvedGitPath == "/opt/homebrew/bin/git")
+        #expect(config.resolvedNamingSet == .mountains)
     }
 
     @Test("Load returns default when no file exists")
@@ -126,6 +147,7 @@ struct ConfigTests {
         let manager = ConfigManager(baseDirectory: temp)
         let config = try manager.load()
         #expect(config.gitPath == nil)
+        #expect(config.namingSet == nil)
     }
 
     @Test("Save and load round-trips")
@@ -134,11 +156,12 @@ struct ConfigTests {
         defer { try? FileManager.default.removeItem(at: temp) }
 
         let manager = ConfigManager(baseDirectory: temp)
-        let original = Config(gitPath: "/usr/local/bin/git")
+        let original = Config(gitPath: "/usr/local/bin/git", namingSet: .rivers)
         try manager.save(original)
 
         let loaded = try manager.load()
         #expect(loaded.gitPath == "/usr/local/bin/git")
+        #expect(loaded.namingSet == .rivers)
     }
 }
 

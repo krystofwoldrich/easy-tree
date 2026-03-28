@@ -7,23 +7,22 @@ public struct NameRegistry: Sendable {
         self.filePath = baseDirectory.appendingPathComponent("used-names.json")
     }
 
-    /// Claims a random unique city name. Appends -vN if already used.
-    public func claimName() throws -> String {
+    /// Claims a random unique name from the given naming set. Appends -vN if already used.
+    public func claimName(from namingSet: NamingSet) throws -> String {
         var usedNames = try loadUsedNames()
 
-        // Shuffle cities and try to find an unused base name
-        let shuffled = CityNames.all.shuffled()
-        for city in shuffled where usedNames[city] == nil {
-            usedNames[city] = 1
+        let shuffled = namingSet.names.shuffled()
+        for name in shuffled where usedNames[name] == nil {
+            usedNames[name] = 1
             try saveUsedNames(usedNames)
-            return city
+            return name
         }
 
         // All base names used — pick a random one and append -vN
-        let city = shuffled[0]
-        let count = usedNames[city, default: 0] + 1
-        usedNames[city] = count
-        let versionedName = "\(city)-v\(count)"
+        let name = shuffled[0]
+        let count = usedNames[name, default: 0] + 1
+        usedNames[name] = count
+        let versionedName = "\(name)-v\(count)"
         try saveUsedNames(usedNames)
         return versionedName
     }
