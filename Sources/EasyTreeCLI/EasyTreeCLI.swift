@@ -19,9 +19,11 @@ extension EasyTreeCLI {
         )
 
         func run() throws {
+            let baseDir = EasyTreeKit.defaultBaseDirectory
             let cwd = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             let repo = try RepoInfo.detect(from: cwd)
-            let manager = WorktreeManager(baseDirectory: EasyTreeKit.defaultBaseDirectory)
+            let config = try ConfigManager(baseDirectory: baseDir).load()
+            let manager = WorktreeManager(baseDirectory: baseDir, config: config)
 
             print("Fetching latest from origin...")
             let worktree = try manager.create(repo: repo)

@@ -3,10 +3,12 @@ import Foundation
 public struct WorktreeManager: Sendable {
     private let baseDirectory: URL
     private let nameRegistry: NameRegistry
+    private let config: Config
 
-    public init(baseDirectory: URL) {
+    public init(baseDirectory: URL, config: Config = Config()) {
         self.baseDirectory = baseDirectory
         self.nameRegistry = NameRegistry(baseDirectory: baseDirectory)
+        self.config = config
     }
 
     /// Creates a new worktree for the given repository.
@@ -17,7 +19,7 @@ public struct WorktreeManager: Sendable {
     /// 4. Creates a new branch named after the city from remote HEAD
     /// 5. Creates the worktree at `~/.easy-tree/{repo-name}/{city-name}`
     public func create(repo: RepoInfo) throws -> Worktree {
-        let git = GitShell(workingDirectory: repo.rootURL)
+        let git = GitShell(workingDirectory: repo.rootURL, gitPath: config.resolvedGitPath)
 
         // 1. Fetch latest
         try git.run("fetch", "--quiet")

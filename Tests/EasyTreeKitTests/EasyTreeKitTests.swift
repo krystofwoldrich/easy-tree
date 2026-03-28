@@ -96,6 +96,52 @@ struct NameRegistryTests {
     }
 }
 
+@Suite("Config Tests")
+struct ConfigTests {
+    private func makeTempDirectory() throws -> URL {
+        let temp = FileManager.default.temporaryDirectory
+            .appendingPathComponent("easy-tree-config-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: temp, withIntermediateDirectories: true)
+        return temp
+    }
+
+    @Test("Default config has nil gitPath")
+    func defaultConfig() {
+        let config = Config()
+        #expect(config.gitPath == nil)
+        #expect(config.resolvedGitPath == "/usr/bin/git")
+    }
+
+    @Test("Config with custom git path")
+    func customGitPath() {
+        let config = Config(gitPath: "/opt/homebrew/bin/git")
+        #expect(config.resolvedGitPath == "/opt/homebrew/bin/git")
+    }
+
+    @Test("Load returns default when no file exists")
+    func loadDefaultWhenMissing() throws {
+        let temp = try makeTempDirectory()
+        defer { try? FileManager.default.removeItem(at: temp) }
+
+        let manager = ConfigManager(baseDirectory: temp)
+        let config = try manager.load()
+        #expect(config.gitPath == nil)
+    }
+
+    @Test("Save and load round-trips")
+    func saveAndLoad() throws {
+        let temp = try makeTempDirectory()
+        defer { try? FileManager.default.removeItem(at: temp) }
+
+        let manager = ConfigManager(baseDirectory: temp)
+        let original = Config(gitPath: "/usr/local/bin/git")
+        try manager.save(original)
+
+        let loaded = try manager.load()
+        #expect(loaded.gitPath == "/usr/local/bin/git")
+    }
+}
+
 @Suite("RepoInfo Tests")
 struct RepoInfoTests {
     @Test("Detect throws for non-git directory")

@@ -2,9 +2,11 @@ import Foundation
 
 public struct GitShell: Sendable {
     public let workingDirectory: URL
+    public let gitPath: String
 
-    public init(workingDirectory: URL) {
+    public init(workingDirectory: URL, gitPath: String = "/usr/bin/git") {
         self.workingDirectory = workingDirectory
+        self.gitPath = gitPath
     }
 
     @discardableResult
@@ -15,7 +17,7 @@ public struct GitShell: Sendable {
     @discardableResult
     public func run(_ arguments: [String]) throws -> String {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.executableURL = URL(fileURLWithPath: gitPath)
         process.arguments = arguments
         process.currentDirectoryURL = workingDirectory
 
