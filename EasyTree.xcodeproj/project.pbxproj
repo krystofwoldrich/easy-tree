@@ -10,8 +10,12 @@
 		2B6E0AAFC18423C32E7BC637 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E97BBA8CD93A5F580215D657 /* Assets.xcassets */; };
 		3DE7EA8DB695BA5EBAC69372 /* EasyTreeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */; };
 		547AB5F6C438C593CB42D924 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE441C0A27A999417F2D2DB /* ContentView.swift */; };
+		5B6CD32B671A166FF1CE7BFD /* OpenTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E28A28182C66790E5863C7 /* OpenTarget.swift */; };
 		7B1FEE688A849470D35CB9F2 /* EasyTreeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */; };
+		892994BD3A29D433F2038D9E /* WorkspaceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AEDF994910215BCBC090C3 /* WorkspaceStore.swift */; };
+		8B402DA82CDF38D2E4E5F8FD /* WorkspaceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175A5F60C993186A658E7FE4 /* WorkspaceRow.swift */; };
 		D69236D53B5A2CA6875BC5BB /* EasyTreeKit in Frameworks */ = {isa = PBXBuildFile; productRef = F98405B17CF63A31B390793C /* EasyTreeKit */; };
+		E1401EF65BDF1F2A9D1FFFA0 /* AppWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BF9BB90304FDC6D33BF3EF /* AppWorkspace.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,11 +30,15 @@
 
 /* Begin PBXFileReference section */
 		003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyTreeApp.entitlements; sourceTree = "<group>"; };
+		07E28A28182C66790E5863C7 /* OpenTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTarget.swift; sourceTree = "<group>"; };
 		12728C98674949A83F6CA2EE /* EasyTreeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTreeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		175A5F60C993186A658E7FE4 /* WorkspaceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRow.swift; sourceTree = "<group>"; };
+		70AEDF994910215BCBC090C3 /* WorkspaceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceStore.swift; sourceTree = "<group>"; };
 		7AE441C0A27A999417F2D2DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9CFC6CD021DD5FAD59DEADE5 /* EasyTreeAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeAppTests.swift; sourceTree = "<group>"; };
 		B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeApp.swift; sourceTree = "<group>"; };
 		BB1E2FC5E4409402C004A071 /* easy-tree */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "easy-tree"; path = .; sourceTree = SOURCE_ROOT; };
+		D8BF9BB90304FDC6D33BF3EF /* AppWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWorkspace.swift; sourceTree = "<group>"; };
 		E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyTreeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97BBA8CD93A5F580215D657 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,10 +67,14 @@
 		4830E531A134F92318E1E11D /* EasyTreeApp */ = {
 			isa = PBXGroup;
 			children = (
+				D8BF9BB90304FDC6D33BF3EF /* AppWorkspace.swift */,
 				E97BBA8CD93A5F580215D657 /* Assets.xcassets */,
 				7AE441C0A27A999417F2D2DB /* ContentView.swift */,
 				003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */,
 				B538A1972F1F26C6AB688A48 /* EasyTreeApp.swift */,
+				07E28A28182C66790E5863C7 /* OpenTarget.swift */,
+				175A5F60C993186A658E7FE4 /* WorkspaceRow.swift */,
+				70AEDF994910215BCBC090C3 /* WorkspaceStore.swift */,
 			);
 			path = EasyTreeApp;
 			sourceTree = "<group>";
@@ -190,8 +202,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1401EF65BDF1F2A9D1FFFA0 /* AppWorkspace.swift in Sources */,
 				547AB5F6C438C593CB42D924 /* ContentView.swift in Sources */,
 				3DE7EA8DB695BA5EBAC69372 /* EasyTreeApp.swift in Sources */,
+				5B6CD32B671A166FF1CE7BFD /* OpenTarget.swift in Sources */,
+				8B402DA82CDF38D2E4E5F8FD /* WorkspaceRow.swift in Sources */,
+				892994BD3A29D433F2038D9E /* WorkspaceStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
