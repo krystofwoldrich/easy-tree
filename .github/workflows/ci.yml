@@ -50,17 +50,51 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Build macOS app
+      - name: Import code signing certificate
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          CERTIFICATE_P12_BASE64: ${{ secrets.CERTIFICATE_P12_BASE64 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
         run: |
-          xcodebuild archive \
-            -project EasyTree.xcodeproj \
-            -scheme EasyTreeApp \
-            -configuration Release \
-            -archivePath build/EasyTree.xcarchive \
-            CODE_SIGNING_ALLOWED=NO \
-            MARKETING_VERSION="${{ env.VERSION }}" \
-            CURRENT_PROJECT_VERSION="${{ env.BUILD_NUMBER }}" \
-            SPARKLE_ED_PUBLIC_KEY="${{ secrets.SPARKLE_ED_PUBLIC_KEY }}"
+          CERT_FILE=$(mktemp /tmp/cert.XXXXXX.p12)
+          KEYCHAIN_PATH=$(mktemp /tmp/keychain.XXXXXX.keychain-db)
+          KEYCHAIN_PASSWORD=$(uuidgen)
+
+          echo "$CERTIFICATE_P12_BASE64" | base64 --decode > "$CERT_FILE"
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          security import "$CERT_FILE" -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | tr -d '"')
+
+          echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
+
+          rm "$CERT_FILE"
+
+      - name: Build and archive macOS app
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ] && [ "${{ github.event_name }}" = "push" ]; then
+            xcodebuild archive \
+              -project EasyTree.xcodeproj \
+              -scheme EasyTreeApp \
+              -configuration Release \
+              -archivePath build/EasyTree.xcarchive \
+              CODE_SIGN_STYLE=Manual \
+              CODE_SIGN_IDENTITY="Developer ID Application" \
+              OTHER_CODE_SIGN_FLAGS="--keychain ${{ env.KEYCHAIN_PATH }}" \
+              MARKETING_VERSION="${{ env.VERSION }}" \
+              CURRENT_PROJECT_VERSION="${{ env.BUILD_NUMBER }}" \
+              SPARKLE_ED_PUBLIC_KEY="${{ secrets.SPARKLE_ED_PUBLIC_KEY }}"
+          else
+            xcodebuild build \
+              -project EasyTree.xcodeproj \
+              -scheme EasyTreeApp \
+              -destination "platform=macOS" \
+              CODE_SIGNING_ALLOWED=NO
+          fi
 
       - name: Export and zip app
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -70,8 +104,27 @@ jobs:
           cd build/export
           zip -r -y ../../EasyTree-${{ env.VERSION }}.zip EasyTree.app
 
+      - name: Notarize app
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          xcrun notarytool submit EasyTree-${{ env.VERSION }}.zip \
+            --apple-id "$APPLE_ID" \
+            --password "$APPLE_APP_PASSWORD" \
+            --team-id "$APPLE_TEAM_ID" \
+            --wait
+
+          # Staple the app, then re-zip
+          xcrun stapler staple build/export/EasyTree.app
+          rm EasyTree-${{ env.VERSION }}.zip
+          cd build/export
+          zip -r -y ../../EasyTree-${{ env.VERSION }}.zip EasyTree.app
+
       - name: Sign with Sparkle EdDSA
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && env.SPARKLE_ED_PRIVATE_KEY != ''
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: |
@@ -80,11 +133,11 @@ jobs:
             SIGN_UPDATE=$(find ~/Library/Developer/Xcode/DerivedData -name "sign_update" -type f 2>/dev/null | head -1)
           fi
 
-          if [ -n "$SIGN_UPDATE" ]; then
+          if [ -n "$SIGN_UPDATE" ] && [ -n "$SPARKLE_ED_PRIVATE_KEY" ]; then
             SIGNATURE=$(echo "$SPARKLE_ED_PRIVATE_KEY" | "$SIGN_UPDATE" EasyTree-${{ env.VERSION }}.zip --ed-key-file -)
             echo "SPARKLE_SIGNATURE=${SIGNATURE}" >> $GITHUB_ENV
           else
-            echo "sign_update not found, skipping signature"
+            echo "sign_update or key not found, skipping Sparkle signature"
           fi
 
       - name: Generate release notes
@@ -164,3 +217,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add appcast.xml
           git diff --cached --quiet || git commit -m "Update appcast.xml for ${{ env.VERSION }}" && git push
+
+      - name: Cleanup keychain
+        if: always()
+        run: |
+          if [ -n "${{ env.KEYCHAIN_PATH }}" ]; then
+            security delete-keychain "${{ env.KEYCHAIN_PATH }}" 2>/dev/null || true
+          fi
