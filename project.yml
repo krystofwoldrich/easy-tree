@@ -52,7 +52,7 @@ targets:
       path: EasyTreeApp/EasyTreeApp.entitlements
     plist:
       SUFeedURL: "https://raw.githubusercontent.com/krystofwoldrich/easy-tree/main/appcast.xml"
-      SUPublicEDKey: "$(SPARKLE_ED_PUBLIC_KEY)"
+      SUPublicEDKey: "St802MOMAFyEtr+U2zXiDow1MYA5TbYGgmlnlx4VQSU="
 
   EasyTreeAppTests:
     type: bundle.unit-test
