@@ -4,39 +4,21 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree a1e8bbb</title>
-      <pubDate>Sun, 29 Mar 2026 19:05:14 +0000</pubDate>
-      <sparkle:version>25</sparkle:version>
-      <sparkle:shortVersionString>a1e8bbb</sparkle:shortVersionString>
+      <title>EasyTree 0c4e864</title>
+      <pubDate>Sun, 29 Mar 2026 19:12:34 +0000</pubDate>
+      <sparkle:version>27</sparkle:version>
+      <sparkle:shortVersionString>0c4e864</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/a1e8bbb/EasyTree-a1e8bbb.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/0c4e864/EasyTree-0c4e864.zip"
         type="application/octet-stream"
         
-        length="5156385"
+        length="5158085"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Merge release steps into CI workflow
-- Add Sparkle auto-updates and CI release workflow
-- Fix lint and format violations
-- Add Settings menu item to open config in TextEdit
-- Update app UI: custom git branch icons, archive worktrees, branch watching
-- Update README icon with rounded corners variant
-- Update app icon
-- Update app icon with square variant
-- chore(ci): clean up steps
-- chore(ci): use macos-26
-- Lower swift-tools-version to 6.0, add swift-format to CI, fix lint
-- Update app icon with rounded corners variant
-- Update app screenshot with Liquid Glass cards
-- Apply Liquid Glass effect to workspace cards
-- Add app icon to macOS app
-- Add README with project overview, icon, and app screenshot
-- Add workspace management UI with async worktree creation
-- Add shared scheme for EasyTreeApp to project.yml
-- Fix missing Info.plist by enabling GENERATE_INFOPLIST_FILE
-- Lower swift-tools-version to 6.2 and configure Xcode code signing</pre>
+        <pre>- Skip Sparkle init when SUFeedURL is not configured
+- Update appcast.xml for a1e8bbb</pre>
       ]]></description>
     </item>
   </channel>
