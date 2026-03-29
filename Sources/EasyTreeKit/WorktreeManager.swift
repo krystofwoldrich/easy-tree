@@ -30,25 +30,28 @@ public struct WorktreeManager: Sendable {
         // 3. Pick unique name
         let treeName = try nameRegistry.claimName(from: config.resolvedNamingSet)
 
-        // 4. Determine worktree path
+        // 4. Build branch name with optional prefix
+        let branchName = config.branchPrefix.map { "\($0)/\(treeName)" } ?? treeName
+
+        // 5. Determine worktree path
         let worktreePath =
             baseDirectory
             .appendingPathComponent(repo.name)
             .appendingPathComponent(treeName)
 
-        // 5. Create directory structure
+        // 6. Create directory structure
         let fileManager = FileManager.default
         let parentDir = worktreePath.deletingLastPathComponent()
         if !fileManager.fileExists(atPath: parentDir.path) {
             try fileManager.createDirectory(at: parentDir, withIntermediateDirectories: true)
         }
 
-        // 6. Create the worktree with a new branch based on remote HEAD
+        // 7. Create the worktree with a new branch based on remote HEAD
         try git.run(
             "worktree",
             "add",
             "-b",
-            treeName,
+            branchName,
             worktreePath.path,
             remoteBranch
         )
@@ -56,7 +59,7 @@ public struct WorktreeManager: Sendable {
         return Worktree(
             name: treeName,
             path: worktreePath,
-            branch: treeName
+            branch: branchName
         )
     }
 

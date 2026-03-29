@@ -3,10 +3,12 @@ import Foundation
 public struct Config: Codable, Sendable {
     public var gitPath: String?
     public var namingSet: NamingSet?
+    public var branchPrefix: String?
 
-    public init(gitPath: String? = nil, namingSet: NamingSet? = nil) {
+    public init(gitPath: String? = nil, namingSet: NamingSet? = nil, branchPrefix: String? = nil) {
         self.gitPath = gitPath
         self.namingSet = namingSet
+        self.branchPrefix = branchPrefix
     }
 
     /// Resolved git executable path — uses config override or falls back to /usr/bin/git.
