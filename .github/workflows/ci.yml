@@ -11,10 +11,14 @@ concurrency:
 
 jobs:
   build:
-    name: Lint, Build & Test
+    name: Lint, Build, Test & Release
     runs-on: macos-26
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Install global tools
         run: brew install swiftlint swift-format xcodegen
@@ -36,13 +40,127 @@ jobs:
       - name: Run Unit Tests
         run: swift test
 
+      - name: Set version from commit hash
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "VERSION=${COMMIT_HASH}" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=${COMMIT_COUNT}" >> $GITHUB_ENV
+
       - name: Generate Xcode project
         run: xcodegen generate
 
       - name: Build macOS app
         run: |
-          xcodebuild build \
+          xcodebuild archive \
             -project EasyTree.xcodeproj \
             -scheme EasyTreeApp \
-            -destination "platform=macOS" \
-            CODE_SIGNING_ALLOWED=NO
+            -configuration Release \
+            -archivePath build/EasyTree.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            MARKETING_VERSION="${{ env.VERSION }}" \
+            CURRENT_PROJECT_VERSION="${{ env.BUILD_NUMBER }}" \
+            SPARKLE_ED_PUBLIC_KEY="${{ secrets.SPARKLE_ED_PUBLIC_KEY }}"
+
+      - name: Export and zip app
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          mkdir -p build/export
+          cp -R build/EasyTree.xcarchive/Products/Applications/EasyTree.app build/export/
+          cd build/export
+          zip -r -y ../../EasyTree-${{ env.VERSION }}.zip EasyTree.app
+
+      - name: Sign with Sparkle EdDSA
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && env.SPARKLE_ED_PRIVATE_KEY != ''
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          SIGN_UPDATE=$(find build/EasyTree.xcarchive -name "sign_update" -type f 2>/dev/null | head -1)
+          if [ -z "$SIGN_UPDATE" ]; then
+            SIGN_UPDATE=$(find ~/Library/Developer/Xcode/DerivedData -name "sign_update" -type f 2>/dev/null | head -1)
+          fi
+
+          if [ -n "$SIGN_UPDATE" ]; then
+            SIGNATURE=$(echo "$SPARKLE_ED_PRIVATE_KEY" | "$SIGN_UPDATE" EasyTree-${{ env.VERSION }}.zip --ed-key-file -)
+            echo "SPARKLE_SIGNATURE=${SIGNATURE}" >> $GITHUB_ENV
+          else
+            echo "sign_update not found, skipping signature"
+          fi
+
+      - name: Generate release notes
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          PREV_TAG=$(git tag --sort=-creatordate | head -1)
+          if [ -n "$PREV_TAG" ]; then
+            NOTES=$(git log --pretty=format:"- %s" ${PREV_TAG}..HEAD | grep -v "Co-Authored-By")
+          else
+            NOTES=$(git log --pretty=format:"- %s" -20 | grep -v "Co-Authored-By")
+          fi
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$NOTES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ env.VERSION }}" \
+            EasyTree-${{ env.VERSION }}.zip \
+            --title "EasyTree ${{ env.VERSION }}" \
+            --notes "${{ env.RELEASE_NOTES }}" \
+            --latest
+
+      - name: Update appcast.xml
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          FILE_SIZE=$(stat -f%z EasyTree-${{ env.VERSION }}.zip)
+          DOWNLOAD_URL="https://github.com/krystofwoldrich/easy-tree/releases/download/${{ env.VERSION }}/EasyTree-${{ env.VERSION }}.zip"
+          PUB_DATE=$(date -R)
+
+          ED_SIG=""
+          if [ -n "${SPARKLE_SIGNATURE}" ]; then
+            ED_SIG=$(echo "${SPARKLE_SIGNATURE}" | grep -o 'edSignature="[^"]*"' | sed 's/edSignature="//;s/"//')
+          fi
+
+          SIG_ATTR=""
+          if [ -n "$ED_SIG" ]; then
+            SIG_ATTR="sparkle:edSignature=\"${ED_SIG}\""
+          fi
+
+          cat > appcast.xml << APPCAST_EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+            <channel>
+              <title>EasyTree Updates</title>
+              <language>en</language>
+              <item>
+                <title>EasyTree ${{ env.VERSION }}</title>
+                <pubDate>${PUB_DATE}</pubDate>
+                <sparkle:version>${{ env.BUILD_NUMBER }}</sparkle:version>
+                <sparkle:shortVersionString>${{ env.VERSION }}</sparkle:shortVersionString>
+                <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+                <enclosure
+                  url="${DOWNLOAD_URL}"
+                  type="application/octet-stream"
+                  ${SIG_ATTR}
+                  length="${FILE_SIZE}"
+                />
+                <description><![CDATA[
+                  <h2>Changes</h2>
+                  <pre>${{ env.RELEASE_NOTES }}</pre>
+                ]]></description>
+              </item>
+            </channel>
+          </rss>
+          APPCAST_EOF
+
+          sed -i '' 's/^          //' appcast.xml
+
+      - name: Commit appcast
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add appcast.xml
+          git diff --cached --quiet || git commit -m "Update appcast.xml for ${{ env.VERSION }}" && git push
