@@ -45,14 +45,11 @@ targets:
         SWIFT_VERSION: "6.0"
         CODE_SIGN_ENTITLEMENTS: EasyTreeApp/EasyTreeApp.entitlements
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_GENERATION_MODE: GeneratedFile
+        INFOPLIST_FILE: EasyTreeApp/Info.plist
         PRODUCT_NAME: EasyTree
         MACOSX_DEPLOYMENT_TARGET: "26.0"
     entitlements:
       path: EasyTreeApp/EasyTreeApp.entitlements
-    plist:
-      SUFeedURL: "https://raw.githubusercontent.com/krystofwoldrich/easy-tree/main/appcast.xml"
-      SUPublicEDKey: "St802MOMAFyEtr+U2zXiDow1MYA5TbYGgmlnlx4VQSU="
 
   EasyTreeAppTests:
     type: bundle.unit-test
