@@ -157,10 +157,11 @@ struct WorktreeItem: View {
                 Image(systemName: worktree.archived ? "arrow.uturn.backward" : "xmark")
                     .font(.system(size: 9, weight: .bold))
                     .foregroundStyle(.secondary)
+                    .frame(width: 16, height: 16)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .help(worktree.archived ? "Unarchive worktree" : "Archive worktree")
-            .frame(width: 16)
             .opacity(isHovered ? 1 : 0)
 
             Image("GitBranch")
