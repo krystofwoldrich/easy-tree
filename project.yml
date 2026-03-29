@@ -10,6 +10,9 @@ options:
 packages:
   EasyTree:
     path: .
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.0.0"
 
 schemes:
   EasyTreeApp:
@@ -32,6 +35,8 @@ targets:
     dependencies:
       - package: EasyTree
         product: EasyTreeKit
+      - package: Sparkle
+        product: Sparkle
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.krystofwoldrich.EasyTreeApp
@@ -45,6 +50,9 @@ targets:
         MACOSX_DEPLOYMENT_TARGET: "26.0"
     entitlements:
       path: EasyTreeApp/EasyTreeApp.entitlements
+    plist:
+      SUFeedURL: "https://raw.githubusercontent.com/krystofwoldrich/easy-tree/main/appcast.xml"
+      SUPublicEDKey: "$(SPARKLE_ED_PUBLIC_KEY)"
 
   EasyTreeAppTests:
     type: bundle.unit-test

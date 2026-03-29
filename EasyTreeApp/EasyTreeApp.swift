@@ -3,6 +3,8 @@ import SwiftUI
 
 @main
 struct EasyTreeApp: App {
+    @StateObject private var updaterViewModel = UpdaterViewModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -12,6 +14,12 @@ struct EasyTreeApp: App {
         .windowStyle(.automatic)
         .windowToolbarStyle(.automatic)
         .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates...") {
+                    updaterViewModel.checkForUpdates()
+                }
+                .disabled(!updaterViewModel.canCheckForUpdates)
+            }
             CommandGroup(after: .appSettings) {
                 Button("Settings...") {
                     openConfig()
@@ -25,7 +33,6 @@ struct EasyTreeApp: App {
         let configURL = EasyTreeKit.defaultBaseDirectory.appendingPathComponent("config.json")
         let fileManager = FileManager.default
 
-        // Create default config if it doesn't exist
         if !fileManager.fileExists(atPath: configURL.path) {
             try? fileManager.createDirectory(
                 at: EasyTreeKit.defaultBaseDirectory,
