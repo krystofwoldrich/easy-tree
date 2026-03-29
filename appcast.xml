@@ -4,21 +4,21 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree ffa9152</title>
-      <pubDate>Sun, 29 Mar 2026 21:19:44 +0000</pubDate>
-      <sparkle:version>44</sparkle:version>
-      <sparkle:shortVersionString>ffa9152</sparkle:shortVersionString>
+      <title>EasyTree 6e33073</title>
+      <pubDate>Sun, 29 Mar 2026 22:12:19 +0000</pubDate>
+      <sparkle:version>46</sparkle:version>
+      <sparkle:shortVersionString>6e33073</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/ffa9152/EasyTree-ffa9152.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/6e33073/EasyTree-6e33073.zip"
         type="application/octet-stream"
-        sparkle:edSignature="FX22v2QAEI3b9C0+hPVS3JgxHRxguSxai/fv5GglsfS6tz141hHBhhmcuRJPq2vd6+c1YZv7sXdwevAWpAn+Dg=="
-        length="5222378"
+        sparkle:edSignature="qy3v662CXOJ7+Db/+SlXJpB8LC8r3Fzwa1yPdll/glyBKqPYuzDDpQBK9JueLcRXu2wZpg7/+hJm0F1K5oSFAA=="
+        length="5226711"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Fix Sparkle config by using explicit Info.plist file
-- Update appcast.xml for 16db8fb</pre>
+        <pre>- Add configurable default open targets via config file
+- Update appcast.xml for ffa9152</pre>
       ]]></description>
     </item>
   </channel>
