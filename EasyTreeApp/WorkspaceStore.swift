@@ -11,11 +11,14 @@ final class WorkspaceStore {
 
     private let baseDirectory: URL
     private let storeFile: URL
+    private var headWatchers: [String: HeadWatcher] = [:]
 
     init(baseDirectory: URL = EasyTreeKit.defaultBaseDirectory) {
         self.baseDirectory = baseDirectory
         self.storeFile = baseDirectory.appendingPathComponent("workspaces.json")
         load()
+        refreshAllBranches()
+        startWatchingAll()
     }
 
     var isAddingWorkspace: Bool {
@@ -30,6 +33,9 @@ final class WorkspaceStore {
             do {
                 let repo = try RepoInfo.detect(from: url)
 
+                let branch = (try? GitShell(workingDirectory: repo.rootURL)
+                    .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
+
                 await MainActor.run {
                     guard !self.workspaces.contains(where: { $0.path == repo.rootURL.path }) else {
                         self.errorMessage = "Workspace '\(repo.name)' is already added."
@@ -37,15 +43,16 @@ final class WorkspaceStore {
                         return
                     }
 
-                    var workspace = AppWorkspace(
+                    let workspace = AppWorkspace(
                         path: repo.rootURL.path,
                         repoName: repo.name,
-                        worktrees: []
+                        currentBranch: branch
                     )
                     self.workspaces.append(workspace)
                     self.busyWorkspaceIDs.remove("__adding__")
                     self.busyWorkspaceIDs.insert(workspace.id)
                     self.save()
+                    self.startWatching(workspace)
                 }
 
                 let worktree = try self.createWorktreeSync(repo: repo, baseDirectory: baseDir)
@@ -96,6 +103,7 @@ final class WorkspaceStore {
     }
 
     func removeWorkspace(_ workspace: AppWorkspace) {
+        headWatchers.removeValue(forKey: workspace.id)
         workspaces.removeAll { $0.id == workspace.id }
         save()
     }
@@ -105,6 +113,55 @@ final class WorkspaceStore {
         workspaces[index].worktrees.removeAll { $0.id == worktree.id }
         save()
     }
+
+    // MARK: - Branch Watching
+
+    private func refreshAllBranches() {
+        for workspace in workspaces {
+            refreshBranch(for: workspace)
+        }
+    }
+
+    private func refreshBranch(for workspace: AppWorkspace) {
+        let workspacePath = workspace.path
+        let workspaceID = workspace.id
+
+        Task.detached {
+            let branch = (try? GitShell(workingDirectory: URL(fileURLWithPath: workspacePath))
+                .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
+
+            await MainActor.run {
+                if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }),
+                    self.workspaces[index].currentBranch != branch
+                {
+                    self.workspaces[index].currentBranch = branch
+                    self.save()
+                }
+            }
+        }
+    }
+
+    private func startWatchingAll() {
+        for workspace in workspaces {
+            startWatching(workspace)
+        }
+    }
+
+    private func startWatching(_ workspace: AppWorkspace) {
+        let headPath = workspace.path + "/.git/HEAD"
+        let workspaceID = workspace.id
+
+        headWatchers[workspaceID] = HeadWatcher(path: headPath) { [weak self] in
+            Task { @MainActor in
+                guard let self,
+                    let workspace = self.workspaces.first(where: { $0.id == workspaceID })
+                else { return }
+                self.refreshBranch(for: workspace)
+            }
+        }
+    }
+
+    // MARK: - Persistence
 
     nonisolated private func createWorktreeSync(
         repo: RepoInfo,
@@ -145,5 +202,32 @@ final class WorkspaceStore {
         } catch {
             errorMessage = "Failed to save workspaces: \(error.localizedDescription)"
         }
+    }
+}
+
+// MARK: - File Watcher
+
+private final class HeadWatcher: @unchecked Sendable {
+    private var source: DispatchSourceFileSystemObject?
+    private let fileDescriptor: Int32
+
+    init(path: String, onChange: @escaping () -> Void) {
+        fileDescriptor = open(path, O_EVTONLY)
+        guard fileDescriptor >= 0 else { return }
+
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fileDescriptor,
+            eventMask: [.write, .rename, .delete],
+            queue: .global(qos: .utility)
+        )
+
+        source.setEventHandler { onChange() }
+        source.setCancelHandler { [fileDescriptor] in close(fileDescriptor) }
+        source.resume()
+        self.source = source
+    }
+
+    deinit {
+        source?.cancel()
     }
 }

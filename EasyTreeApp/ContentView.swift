@@ -4,6 +4,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var store = WorkspaceStore()
     @State private var showError = false
+    @State private var showArchived = false
 
     var body: some View {
         ScrollView {
@@ -14,8 +15,15 @@ struct ContentView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("EasyTree")
+        .navigationTitle("Workspaces")
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Menu {
+                    Toggle("Show Archived Worktrees", isOn: $showArchived.animation())
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     addWorkspace()
@@ -63,11 +71,15 @@ struct ContentView: View {
                 WorkspaceRow(
                     workspace: $workspace,
                     isBusy: store.busyWorkspaceIDs.contains(workspace.id),
+                    showArchived: showArchived,
                     onCreateWorktree: {
                         store.createWorktree(for: workspace)
                     },
                     onOpenWorktree: { worktree, target in
                         target.open(path: worktree.path)
+                    },
+                    onOpenWorkspace: { target in
+                        target.open(path: workspace.path)
                     },
                     onRemoveWorkspace: {
                         store.removeWorkspace(workspace)
@@ -91,7 +103,6 @@ struct ContentView: View {
         guard panel.runModal() == .OK, let url = panel.url else { return }
         store.addWorkspace(at: url)
     }
-
 }
 
 #Preview {
