@@ -4,21 +4,27 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree 0c4e864</title>
-      <pubDate>Sun, 29 Mar 2026 19:12:34 +0000</pubDate>
-      <sparkle:version>27</sparkle:version>
-      <sparkle:shortVersionString>0c4e864</sparkle:shortVersionString>
+      <title>EasyTree 49a435d</title>
+      <pubDate>Sun, 29 Mar 2026 20:38:42 +0000</pubDate>
+      <sparkle:version>35</sparkle:version>
+      <sparkle:shortVersionString>49a435d</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/0c4e864/EasyTree-0c4e864.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/49a435d/EasyTree-49a435d.zip"
         type="application/octet-stream"
-        
-        length="5158085"
+        sparkle:edSignature="JiCHUt2hAx1vMGq2qn7dmBrP2o67ZMUOIMzQ5eAZYywbOGt3wWyv60LyxSsO/YXH6MJchH2fEkypco6139OMBw=="
+        length="5220846"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Skip Sparkle init when SUFeedURL is not configured
-- Update appcast.xml for a1e8bbb</pre>
+        <pre>- Enable hardened runtime and re-sign Sparkle binaries for notarization
+- Update project.pbxproj
+- Fetch notarization log on failure for debugging
+- Add DEVELOPMENT_TEAM to CI archive build
+- Fix keychain creation conflict in CI
+- fix: claude local settings
+- Add code signing and notarization to CI release
+- Update appcast.xml for 0c4e864</pre>
       ]]></description>
     </item>
   </channel>
