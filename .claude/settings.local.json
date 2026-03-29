@@ -8,7 +8,18 @@
       "Bash(git push:*)",
       "Bash(swiftlint lint:*)",
       "Bash(swift-format lint:*)",
-      "Bash(swift-format format:*)"
+      "Bash(swift-format format:*)",
+      "Bash(curl -s https://raw.githubusercontent.com/sparkle-project/Sparkle/2.x/Package.swift)",
+      "Bash(curl -s https://api.github.com/repos/sparkle-project/Sparkle/releases/latest)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\(''''tag_name'''',''''?''''\\), d.get\\(''''name'''',''''?''''\\), d.get\\(''''published_at'''',''''?''''\\)\\)\")",
+      "Bash(curl -s https://api.github.com/repos/sparkle-project/Sparkle/tags?per_page=5)",
+      "Bash(python3 -c \"import sys,json; [print\\(t[''''name'''']\\) for t in json.load\\(sys.stdin\\)]\")",
+      "WebFetch(domain:sparkle-project.org)",
+      "Bash(curl -s https://api.github.com/repos/sparkle-project/Sparkle/releases?per_page=5)",
+      "Bash(python3 -c \"import sys,json; [print\\(r[''''tag_name''''], r[''''name'''']\\) for r in json.load\\(sys.stdin\\)]\")",
+      "WebFetch(domain:sparkle-project.github.io)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -s https://raw.githubusercontent.com/sparkle-project/Sparkle/2.x/README.markdown)"
     ]
   }
 }
