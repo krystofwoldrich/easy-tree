@@ -17,8 +17,7 @@ struct WorkspaceRow: View {
                 worktreeList
             }
         }
-        .background(.background.secondary)
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .glassEffect(.regular, in: .rect(cornerRadius: 12, style: .continuous))
     }
 
     private var workspaceHeader: some View {
