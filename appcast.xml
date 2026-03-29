@@ -4,21 +4,21 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree e6714d9</title>
-      <pubDate>Sun, 29 Mar 2026 20:56:46 +0000</pubDate>
-      <sparkle:version>37</sparkle:version>
-      <sparkle:shortVersionString>e6714d9</sparkle:shortVersionString>
+      <title>EasyTree d587ec2</title>
+      <pubDate>Sun, 29 Mar 2026 21:07:38 +0000</pubDate>
+      <sparkle:version>39</sparkle:version>
+      <sparkle:shortVersionString>d587ec2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/e6714d9/EasyTree-e6714d9.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/d587ec2/EasyTree-d587ec2.zip"
         type="application/octet-stream"
-        sparkle:edSignature="CO+uo0s+9fEQ3eLTEYB24/TnsjgBcozgfrGP79CTmIj1o5+TTbQ9fWTBcugcgnoyOk5I9e5Z/b7to6Wi4oj8Dw=="
-        length="5221237"
+        sparkle:edSignature="ERd1C4uBg1mKhBJDyQAge9I8cLbK4ISUDsw6cSM5idqbNRJR8TtDSp2PHjqIY9hPxoLVQzekZdA4xTWNC7YcBA=="
+        length="5221293"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Enlarge archive button hit area to full 16x16 square
-- Update appcast.xml for 49a435d</pre>
+        <pre>- Hardcode Sparkle public key in Info.plist
+- Update appcast.xml for e6714d9</pre>
       ]]></description>
     </item>
   </channel>
