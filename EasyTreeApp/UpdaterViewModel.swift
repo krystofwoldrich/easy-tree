@@ -4,20 +4,29 @@ import Sparkle
 
 @MainActor
 final class UpdaterViewModel: ObservableObject {
-    let updaterController: SPUStandardUpdaterController
+    private var updaterController: SPUStandardUpdaterController?
 
     @Published var canCheckForUpdates = false
 
     private var cancellable: AnyCancellable?
 
     init() {
-        updaterController = SPUStandardUpdaterController(
+        // Only start Sparkle if SUFeedURL is properly configured
+        guard let feedURL = Bundle.main.infoDictionary?["SUFeedURL"] as? String,
+            !feedURL.isEmpty,
+            !feedURL.contains("$(")
+        else {
+            return
+        }
+
+        let controller = SPUStandardUpdaterController(
             startingUpdater: true,
             updaterDelegate: nil,
             userDriverDelegate: nil
         )
+        updaterController = controller
 
-        cancellable = updaterController.updater.publisher(for: \.canCheckForUpdates)
+        cancellable = controller.updater.publisher(for: \.canCheckForUpdates)
             .receive(on: RunLoop.main)
             .sink { [weak self] value in
                 self?.canCheckForUpdates = value
@@ -25,6 +34,6 @@ final class UpdaterViewModel: ObservableObject {
     }
 
     func checkForUpdates() {
-        updaterController.checkForUpdates(nil)
+        updaterController?.checkForUpdates(nil)
     }
 }
