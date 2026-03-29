@@ -57,8 +57,8 @@ jobs:
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
         run: |
           CERT_FILE=$(mktemp /tmp/cert.XXXXXX.p12)
-          KEYCHAIN_PATH=$(mktemp /tmp/keychain.XXXXXX.keychain-db)
           KEYCHAIN_PASSWORD=$(uuidgen)
+          KEYCHAIN_PATH="/tmp/easytree-ci-${KEYCHAIN_PASSWORD}.keychain-db"
 
           echo "$CERTIFICATE_P12_BASE64" | base64 --decode > "$CERT_FILE"
 
