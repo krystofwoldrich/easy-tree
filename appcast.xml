@@ -4,27 +4,21 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree 49a435d</title>
-      <pubDate>Sun, 29 Mar 2026 20:38:42 +0000</pubDate>
-      <sparkle:version>35</sparkle:version>
-      <sparkle:shortVersionString>49a435d</sparkle:shortVersionString>
+      <title>EasyTree e6714d9</title>
+      <pubDate>Sun, 29 Mar 2026 20:56:46 +0000</pubDate>
+      <sparkle:version>37</sparkle:version>
+      <sparkle:shortVersionString>e6714d9</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/49a435d/EasyTree-49a435d.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/e6714d9/EasyTree-e6714d9.zip"
         type="application/octet-stream"
-        sparkle:edSignature="JiCHUt2hAx1vMGq2qn7dmBrP2o67ZMUOIMzQ5eAZYywbOGt3wWyv60LyxSsO/YXH6MJchH2fEkypco6139OMBw=="
-        length="5220846"
+        sparkle:edSignature="CO+uo0s+9fEQ3eLTEYB24/TnsjgBcozgfrGP79CTmIj1o5+TTbQ9fWTBcugcgnoyOk5I9e5Z/b7to6Wi4oj8Dw=="
+        length="5221237"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Enable hardened runtime and re-sign Sparkle binaries for notarization
-- Update project.pbxproj
-- Fetch notarization log on failure for debugging
-- Add DEVELOPMENT_TEAM to CI archive build
-- Fix keychain creation conflict in CI
-- fix: claude local settings
-- Add code signing and notarization to CI release
-- Update appcast.xml for 0c4e864</pre>
+        <pre>- Enlarge archive button hit area to full 16x16 square
+- Update appcast.xml for 49a435d</pre>
       ]]></description>
     </item>
   </channel>
