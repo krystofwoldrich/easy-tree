@@ -213,6 +213,6 @@ public enum MountainNames {
         "sidley",
         "kirkpatrick",
         "tyree",
-        "shinn"
+        "shinn",
     ]
 }

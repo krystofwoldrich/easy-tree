@@ -11,14 +11,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test-spm:
-    name: Build & Test (SPM)
-    runs-on: macos-15
+  build:
+    name: Lint, Build & Test
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.app
+      - name: Install tools
+        run: brew install swiftlint swift-format
+
+      - name: SwiftLint
+        run: swiftlint lint --strict
+
+      - name: swift-format check
+        run: swift-format lint --strict --recursive Sources Tests EasyTreeApp
 
       - name: Resolve dependencies
         run: swift package resolve
@@ -32,36 +38,16 @@ jobs:
       - name: Run tests
         run: swift test
 
-  build-app:
-    name: Build macOS App
-    runs-on: macos-15
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.app
-
       - name: Install XcodeGen
         run: brew install xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Build app
+      - name: Build macOS app
         run: |
           xcodebuild build \
             -project EasyTree.xcodeproj \
             -scheme EasyTreeApp \
             -destination "platform=macOS" \
             CODE_SIGNING_ALLOWED=NO
-
-  lint:
-    name: Lint
-    runs-on: macos-15
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: SwiftLint
-        run: |
-          brew install swiftlint
-          swiftlint lint --strict

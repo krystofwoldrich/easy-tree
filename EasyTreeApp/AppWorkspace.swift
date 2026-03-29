@@ -9,7 +9,13 @@ struct AppWorktree: Identifiable, Codable {
     var primaryTarget: OpenTarget
     var secondaryTarget: OpenTarget
 
-    init(name: String, path: String, branch: String, primaryTarget: OpenTarget = .vscode, secondaryTarget: OpenTarget = .iterm) {
+    init(
+        name: String,
+        path: String,
+        branch: String,
+        primaryTarget: OpenTarget = .vscode,
+        secondaryTarget: OpenTarget = .iterm
+    ) {
         self.name = name
         self.path = path
         self.branch = branch

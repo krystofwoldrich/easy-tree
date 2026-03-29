@@ -508,7 +508,7 @@ public enum CityNames {
         "port-vila",
         "tarawa",
         "majuro",
-        "funafuti"
+        "funafuti",
     ]
 }
 // swiftlint:enable file_length type_body_length

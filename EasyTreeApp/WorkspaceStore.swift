@@ -106,7 +106,7 @@ final class WorkspaceStore {
         save()
     }
 
-    private nonisolated func createWorktreeSync(
+    nonisolated private func createWorktreeSync(
         repo: RepoInfo,
         baseDirectory: URL
     ) throws -> AppWorktree {

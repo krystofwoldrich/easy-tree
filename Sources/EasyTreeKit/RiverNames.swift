@@ -265,6 +265,6 @@ public enum RiverNames {
         "whanganui",
         "manawatu",
         "fly",
-        "sepik"
+        "sepik",
     ]
 }

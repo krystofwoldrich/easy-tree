@@ -11,7 +11,7 @@ public enum EasyTreeError: LocalizedError {
         switch self {
         case .notAGitRepository(let url):
             "Not a git repository: \(url.path)"
-        case let .gitCommandFailed(command, output):
+        case .gitCommandFailed(let command, let output):
             "Git command failed: \(command)\n\(output)"
         case .cannotDetectRemoteHead:
             "Cannot detect remote HEAD. Ensure the repository has a remote 'origin'."

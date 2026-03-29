@@ -31,7 +31,8 @@ public struct WorktreeManager: Sendable {
         let treeName = try nameRegistry.claimName(from: config.resolvedNamingSet)
 
         // 4. Determine worktree path
-        let worktreePath = baseDirectory
+        let worktreePath =
+            baseDirectory
             .appendingPathComponent(repo.name)
             .appendingPathComponent(treeName)
 
@@ -44,8 +45,10 @@ public struct WorktreeManager: Sendable {
 
         // 6. Create the worktree with a new branch based on remote HEAD
         try git.run(
-            "worktree", "add",
-            "-b", treeName,
+            "worktree",
+            "add",
+            "-b",
+            treeName,
             worktreePath.path,
             remoteBranch
         )

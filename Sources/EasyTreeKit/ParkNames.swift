@@ -268,6 +268,6 @@ public enum ParkNames {
         "altyn-emel",
         "socotra",
         "wadi-rum",
-        "dana"
+        "dana",
     ]
 }
