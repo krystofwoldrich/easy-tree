@@ -33,8 +33,9 @@ final class WorkspaceStore {
             do {
                 let repo = try RepoInfo.detect(from: url)
 
-                let branch = (try? GitShell(workingDirectory: repo.rootURL)
-                    .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
+                let branch =
+                    (try? GitShell(workingDirectory: repo.rootURL)
+                        .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
 
                 await MainActor.run {
                     guard !self.workspaces.contains(where: { $0.path == repo.rootURL.path }) else {
@@ -127,13 +128,13 @@ final class WorkspaceStore {
         let workspaceID = workspace.id
 
         Task.detached {
-            let branch = (try? GitShell(workingDirectory: URL(fileURLWithPath: workspacePath))
-                .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
+            let branch =
+                (try? GitShell(workingDirectory: URL(fileURLWithPath: workspacePath))
+                    .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
 
             await MainActor.run {
-                if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }),
-                    self.workspaces[index].currentBranch != branch
-                {
+                if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }) {
+                    guard self.workspaces[index].currentBranch != branch else { return }
                     self.workspaces[index].currentBranch = branch
                     self.save()
                 }

@@ -89,13 +89,14 @@ struct WorkspaceRow: View {
                         onSave: onSave,
                         onArchive: {
                             withAnimation {
-                                worktree.archived = !worktree.archived
+                                worktree.archived.toggle()
                                 onSave()
                             }
+                        },
+                        onOpen: { target in
+                            onOpenWorktree(worktree, target)
                         }
-                    ) { target in
-                        onOpenWorktree(worktree, target)
-                    }
+                    )
                 }
             }
         }

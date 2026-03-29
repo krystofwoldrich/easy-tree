@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcodegen generate:*)",
+      "Bash(xcodebuild build:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(swiftlint lint:*)",
+      "Bash(swift-format lint:*)",
+      "Bash(swift-format format:*)"
+    ]
+  }
+}
