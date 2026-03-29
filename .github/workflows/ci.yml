@@ -84,6 +84,7 @@ jobs:
               -archivePath build/EasyTree.xcarchive \
               CODE_SIGN_STYLE=Manual \
               CODE_SIGN_IDENTITY="Developer ID Application" \
+              DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}" \
               OTHER_CODE_SIGN_FLAGS="--keychain ${{ env.KEYCHAIN_PATH }}" \
               MARKETING_VERSION="${{ env.VERSION }}" \
               CURRENT_PROJECT_VERSION="${{ env.BUILD_NUMBER }}" \
