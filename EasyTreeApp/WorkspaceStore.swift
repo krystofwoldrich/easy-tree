@@ -33,9 +33,12 @@ final class WorkspaceStore {
             do {
                 let repo = try RepoInfo.detect(from: url)
 
+                let config = try ConfigManager(baseDirectory: baseDir).load()
                 let branch =
                     (try? GitShell(workingDirectory: repo.rootURL)
                         .run("rev-parse", "--abbrev-ref", "HEAD")) ?? ""
+                let primary = config.primaryOpen.flatMap { OpenTarget.from($0) } ?? .vscode
+                let secondary = config.secondaryOpen.flatMap { OpenTarget.from($0) } ?? .iterm
 
                 await MainActor.run {
                     guard !self.workspaces.contains(where: { $0.path == repo.rootURL.path }) else {
@@ -47,7 +50,9 @@ final class WorkspaceStore {
                     let workspace = AppWorkspace(
                         path: repo.rootURL.path,
                         repoName: repo.name,
-                        currentBranch: branch
+                        currentBranch: branch,
+                        primaryTarget: primary,
+                        secondaryTarget: secondary
                     )
                     self.workspaces.append(workspace)
                     self.busyWorkspaceIDs.remove("__adding__")
@@ -56,7 +61,12 @@ final class WorkspaceStore {
                     self.startWatching(workspace)
                 }
 
-                let worktree = try self.createWorktreeSync(repo: repo, baseDirectory: baseDir)
+                let worktree = try self.createWorktreeSync(
+                    repo: repo,
+                    baseDirectory: baseDir,
+                    primaryTarget: primary,
+                    secondaryTarget: secondary
+                )
 
                 await MainActor.run {
                     if let index = self.workspaces.firstIndex(where: { $0.path == repo.rootURL.path }) {
@@ -81,11 +91,18 @@ final class WorkspaceStore {
         let workspacePath = workspace.path
         let workspaceID = workspace.id
         let baseDir = baseDirectory
+        let primary = workspace.primaryTarget
+        let secondary = workspace.secondaryTarget
 
         Task.detached {
             do {
                 let repo = try RepoInfo.detect(from: URL(fileURLWithPath: workspacePath))
-                let worktree = try self.createWorktreeSync(repo: repo, baseDirectory: baseDir)
+                let worktree = try self.createWorktreeSync(
+                    repo: repo,
+                    baseDirectory: baseDir,
+                    primaryTarget: primary,
+                    secondaryTarget: secondary
+                )
 
                 await MainActor.run {
                     if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }) {
@@ -166,7 +183,9 @@ final class WorkspaceStore {
 
     nonisolated private func createWorktreeSync(
         repo: RepoInfo,
-        baseDirectory: URL
+        baseDirectory: URL,
+        primaryTarget: OpenTarget,
+        secondaryTarget: OpenTarget
     ) throws -> AppWorktree {
         let config = try ConfigManager(baseDirectory: baseDirectory).load()
         let manager = WorktreeManager(baseDirectory: baseDirectory, config: config)
@@ -174,7 +193,9 @@ final class WorkspaceStore {
         return AppWorktree(
             name: worktree.name,
             path: worktree.path.path,
-            branch: worktree.branch
+            branch: worktree.branch,
+            primaryTarget: primaryTarget,
+            secondaryTarget: secondaryTarget
         )
     }
 

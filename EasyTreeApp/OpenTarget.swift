@@ -13,6 +13,10 @@ enum OpenTarget: String, CaseIterable, Identifiable, Codable {
 
     var id: String { rawValue }
 
+    static func from(_ string: String) -> Self? {
+        allCases.first { $0.rawValue.lowercased() == string.lowercased() }
+    }
+
     var bundleID: String {
         switch self {
         case .vscode: "com.microsoft.VSCode"

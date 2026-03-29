@@ -4,11 +4,21 @@ public struct Config: Codable, Sendable {
     public var gitPath: String?
     public var namingSet: NamingSet?
     public var branchPrefix: String?
+    public var primaryOpen: String?
+    public var secondaryOpen: String?
 
-    public init(gitPath: String? = nil, namingSet: NamingSet? = nil, branchPrefix: String? = nil) {
+    public init(
+        gitPath: String? = nil,
+        namingSet: NamingSet? = nil,
+        branchPrefix: String? = nil,
+        primaryOpen: String? = nil,
+        secondaryOpen: String? = nil
+    ) {
         self.gitPath = gitPath
         self.namingSet = namingSet
         self.branchPrefix = branchPrefix
+        self.primaryOpen = primaryOpen
+        self.secondaryOpen = secondaryOpen
     }
 
     /// Resolved git executable path — uses config override or falls back to /usr/bin/git.
