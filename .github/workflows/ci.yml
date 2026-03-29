@@ -85,7 +85,8 @@ jobs:
               CODE_SIGN_STYLE=Manual \
               CODE_SIGN_IDENTITY="Developer ID Application" \
               DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}" \
-              OTHER_CODE_SIGN_FLAGS="--keychain ${{ env.KEYCHAIN_PATH }}" \
+              ENABLE_HARDENED_RUNTIME=YES \
+              OTHER_CODE_SIGN_FLAGS="--timestamp --options=runtime --keychain ${{ env.KEYCHAIN_PATH }}" \
               MARKETING_VERSION="${{ env.VERSION }}" \
               CURRENT_PROJECT_VERSION="${{ env.BUILD_NUMBER }}" \
               SPARKLE_ED_PUBLIC_KEY="${{ secrets.SPARKLE_ED_PUBLIC_KEY }}"
@@ -97,11 +98,41 @@ jobs:
               CODE_SIGNING_ALLOWED=NO
           fi
 
-      - name: Export and zip app
+      - name: Export and re-sign app
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           mkdir -p build/export
           cp -R build/EasyTree.xcarchive/Products/Applications/EasyTree.app build/export/
+
+          APP="build/export/EasyTree.app"
+          SIGN_IDENTITY="Developer ID Application"
+          SIGN_FLAGS="--force --timestamp --options=runtime --keychain ${{ env.KEYCHAIN_PATH }}"
+
+          # Re-sign all Sparkle nested binaries
+          find "$APP/Contents/Frameworks" -type f -perm +111 | while read binary; do
+            codesign $SIGN_FLAGS --sign "$SIGN_IDENTITY" "$binary" || true
+          done
+
+          # Sign XPC services
+          find "$APP/Contents/Frameworks" -name "*.xpc" -type d | while read xpc; do
+            codesign $SIGN_FLAGS --sign "$SIGN_IDENTITY" "$xpc"
+          done
+
+          # Sign Updater.app inside Sparkle
+          find "$APP/Contents/Frameworks" -name "*.app" -type d | while read nested_app; do
+            codesign $SIGN_FLAGS --sign "$SIGN_IDENTITY" "$nested_app"
+          done
+
+          # Sign the Sparkle framework
+          codesign $SIGN_FLAGS --sign "$SIGN_IDENTITY" "$APP/Contents/Frameworks/Sparkle.framework"
+
+          # Sign the main app
+          codesign $SIGN_FLAGS --sign "$SIGN_IDENTITY" "$APP"
+
+          # Verify
+          codesign --verify --deep --strict "$APP"
+          echo "Code signing verified successfully"
+
           cd build/export
           zip -r -y ../../EasyTree-${{ env.VERSION }}.zip EasyTree.app
 
