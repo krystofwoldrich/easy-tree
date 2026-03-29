@@ -4,22 +4,21 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree 16db8fb</title>
-      <pubDate>Sun, 29 Mar 2026 21:14:53 +0000</pubDate>
-      <sparkle:version>42</sparkle:version>
-      <sparkle:shortVersionString>16db8fb</sparkle:shortVersionString>
+      <title>EasyTree ffa9152</title>
+      <pubDate>Sun, 29 Mar 2026 21:19:44 +0000</pubDate>
+      <sparkle:version>44</sparkle:version>
+      <sparkle:shortVersionString>ffa9152</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/16db8fb/EasyTree-16db8fb.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/ffa9152/EasyTree-ffa9152.zip"
         type="application/octet-stream"
-        sparkle:edSignature="IhXwjD5RHPbXDexlcvGoV3y2lkSknz/xKcxhg368O+7GFzYTdki55pUI+nj/7/LnoBSZstRdd/eIKH5g78RjAA=="
-        length="5222234"
+        sparkle:edSignature="FX22v2QAEI3b9C0+hPVS3JgxHRxguSxai/fv5GglsfS6tz141hHBhhmcuRJPq2vd6+c1YZv7sXdwevAWpAn+Dg=="
+        length="5222378"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Update app screenshot in README
-- Add branchPrefix config option for prefixed branch names
-- Update appcast.xml for d587ec2</pre>
+        <pre>- Fix Sparkle config by using explicit Info.plist file
+- Update appcast.xml for 16db8fb</pre>
       ]]></description>
     </item>
   </channel>
