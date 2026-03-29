@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -33,7 +33,7 @@
 /* Begin PBXFileReference section */
 		003BDBB31F6D14B49CAA0BFA /* EasyTreeApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyTreeApp.entitlements; sourceTree = "<group>"; };
 		07E28A28182C66790E5863C7 /* OpenTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTarget.swift; sourceTree = "<group>"; };
-		12728C98674949A83F6CA2EE /* EasyTreeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTreeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		12728C98674949A83F6CA2EE /* EasyTree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		175A5F60C993186A658E7FE4 /* WorkspaceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRow.swift; sourceTree = "<group>"; };
 		70AEDF994910215BCBC090C3 /* WorkspaceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceStore.swift; sourceTree = "<group>"; };
 		7AE441C0A27A999417F2D2DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		0ECC6CA802AAF327AD936B10 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				12728C98674949A83F6CA2EE /* EasyTreeApp.app */,
+				12728C98674949A83F6CA2EE /* EasyTree.app */,
 				E196E3A372B12F7305200E07 /* EasyTreeAppTests.xctest */,
 			);
 			name = Products;
@@ -139,7 +139,7 @@
 				20624BD6AB95DFD96E122F08 /* Sparkle */,
 			);
 			productName = EasyTreeApp;
-			productReference = 12728C98674949A83F6CA2EE /* EasyTreeApp.app */;
+			productReference = 12728C98674949A83F6CA2EE /* EasyTree.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C0BBEE9E944B06625488C53E /* EasyTreeAppTests */ = {
@@ -183,7 +183,6 @@
 				28787FCC4A60D8B1C21B20FD /* XCRemoteSwiftPackageReference "Sparkle" */,
 				5CD03A88C61194254A07250D /* XCLocalSwiftPackageReference "." */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -245,6 +244,7 @@
 				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9734H7B7Y9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -348,6 +348,7 @@
 				CODE_SIGN_ENTITLEMENTS = EasyTreeApp/EasyTreeApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9734H7B7Y9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
 				LD_RUNPATH_SEARCH_PATHS = (
