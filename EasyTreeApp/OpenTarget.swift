@@ -30,10 +30,7 @@ enum OpenTarget: String, CaseIterable, Identifiable, Codable {
     }
 
     var icon: NSImage {
-        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
-            return NSWorkspace.shared.icon(forFile: appURL.path)
-        }
-        return NSWorkspace.shared.icon(for: .applicationBundle)
+        IconCache.shared.icon(for: self)
     }
 
     func open(path: String) {
@@ -55,5 +52,24 @@ enum OpenTarget: String, CaseIterable, Identifiable, Codable {
             withApplicationAt: appURL,
             configuration: NSWorkspace.OpenConfiguration()
         )
+    }
+}
+
+private final class IconCache: @unchecked Sendable {
+    nonisolated(unsafe) static let shared = IconCache()
+    private var cache: [OpenTarget: NSImage] = [:]
+
+    func icon(for target: OpenTarget) -> NSImage {
+        if let cached = cache[target] {
+            return cached
+        }
+        let image: NSImage
+        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: target.bundleID) {
+            image = NSWorkspace.shared.icon(forFile: appURL.path)
+        } else {
+            image = NSWorkspace.shared.icon(for: .applicationBundle)
+        }
+        cache[target] = image
+        return image
     }
 }

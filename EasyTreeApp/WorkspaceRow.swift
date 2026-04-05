@@ -182,14 +182,14 @@ struct WorktreeItem: View {
                 .frame(width: 16)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(worktree.displayPath)
+                Text(worktree.branch)
                     .font(.body)
                     .foregroundStyle(worktree.archived ? .secondary : .primary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                Text(worktree.branch)
+                Text(worktree.displayPath)
                     .font(.caption)
                     .foregroundStyle(worktree.archived ? .quaternary : .secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
 
             Spacer()
@@ -242,14 +242,14 @@ struct ExternalWorktreeItem: View {
                 .frame(width: 16)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(worktree.displayPath)
+                Text(worktree.branch)
                     .font(.body)
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                Text(worktree.branch)
+                Text(worktree.displayPath)
                     .font(.caption)
                     .foregroundStyle(.quaternary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
 
             Spacer()

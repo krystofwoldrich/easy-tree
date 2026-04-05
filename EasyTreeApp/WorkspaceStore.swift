@@ -310,6 +310,8 @@ final class WorkspaceStore {
 private final class HeadWatcher: @unchecked Sendable {
     private var source: DispatchSourceFileSystemObject?
     private let fileDescriptor: Int32
+    private var debounceWork: DispatchWorkItem?
+    private let debounceQueue = DispatchQueue(label: "easy-tree.head-watcher.debounce")
 
     init(path: String, onChange: @escaping () -> Void) {
         fileDescriptor = open(path, O_EVTONLY)
@@ -321,7 +323,14 @@ private final class HeadWatcher: @unchecked Sendable {
             queue: .global(qos: .utility)
         )
 
-        source.setEventHandler { onChange() }
+        source.setEventHandler { [weak self] in
+            self?.debounceQueue.async {
+                self?.debounceWork?.cancel()
+                let work = DispatchWorkItem { onChange() }
+                self?.debounceWork = work
+                self?.debounceQueue.asyncAfter(deadline: .now() + 0.5, execute: work)
+            }
+        }
         source.setCancelHandler { [fileDescriptor] in close(fileDescriptor) }
         source.resume()
         self.source = source

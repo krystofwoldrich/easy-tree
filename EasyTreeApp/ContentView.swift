@@ -4,8 +4,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var store = WorkspaceStore()
     @State private var showError = false
-    @State private var showArchived = false
-    @State private var showExternal = false
+    @AppStorage("showArchived") private var showArchived = false
+    @AppStorage("showExternal") private var showExternal = false
 
     var body: some View {
         ScrollView {
@@ -68,7 +68,7 @@ struct ContentView: View {
     }
 
     private var workspaceList: some View {
-        LazyVStack(spacing: 12) {
+        VStack(spacing: 12) {
             ForEach($store.workspaces) { $workspace in
                 WorkspaceRow(
                     workspace: $workspace,
