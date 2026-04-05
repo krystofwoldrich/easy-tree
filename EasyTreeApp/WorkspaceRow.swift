@@ -185,9 +185,11 @@ struct WorktreeItem: View {
                 Text(worktree.name)
                     .font(.body)
                     .foregroundStyle(worktree.archived ? .secondary : .primary)
-                Text(worktree.branch)
+                Text(worktree.displayPath)
                     .font(.caption)
                     .foregroundStyle(worktree.archived ? .quaternary : .secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
 
             Spacer()
@@ -243,9 +245,11 @@ struct ExternalWorktreeItem: View {
                 Text(worktree.name)
                     .font(.body)
                     .foregroundStyle(.secondary)
-                Text(worktree.branch)
+                Text(worktree.displayPath)
                     .font(.caption)
                     .foregroundStyle(.quaternary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
             }
 
             Spacer()

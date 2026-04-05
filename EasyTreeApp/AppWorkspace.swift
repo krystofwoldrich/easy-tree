@@ -35,6 +35,16 @@ struct AppWorktree: Identifiable, Codable {
         secondaryTarget = try container.decodeIfPresent(OpenTarget.self, forKey: .secondaryTarget) ?? .iterm
         archived = try container.decodeIfPresent(Bool.self, forKey: .archived) ?? false
     }
+
+    var displayPath: String { shortenHomePath(path) }
+}
+
+private func shortenHomePath(_ path: String) -> String {
+    let home = FileManager.default.homeDirectoryForCurrentUser.path
+    if path.hasPrefix(home) {
+        return "~" + path.dropFirst(home.count)
+    }
+    return path
 }
 
 struct ExternalWorktree: Identifiable {
@@ -42,6 +52,8 @@ struct ExternalWorktree: Identifiable {
     let path: String
     let branch: String
     let name: String
+
+    var displayPath: String { shortenHomePath(path) }
 }
 
 struct AppWorkspace: Identifiable, Codable {
@@ -91,11 +103,5 @@ struct AppWorkspace: Identifiable, Codable {
         secondaryTarget = try container.decodeIfPresent(OpenTarget.self, forKey: .secondaryTarget) ?? .iterm
     }
 
-    var displayPath: String {
-        let home = FileManager.default.homeDirectoryForCurrentUser.path
-        if path.hasPrefix(home) {
-            return "~" + path.dropFirst(home.count)
-        }
-        return path
-    }
+    var displayPath: String { shortenHomePath(path) }
 }
