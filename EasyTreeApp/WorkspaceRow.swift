@@ -4,6 +4,7 @@ struct WorkspaceRow: View {
     @Binding var workspace: AppWorkspace
     let isBusy: Bool
     let showArchived: Bool
+    let showExternal: Bool
     let onCreateWorktree: () -> Void
     let onOpenWorktree: (AppWorktree, OpenTarget) -> Void
     let onOpenWorkspace: (OpenTarget) -> Void
@@ -97,6 +98,14 @@ struct WorkspaceRow: View {
                             onOpenWorktree(worktree, target)
                         }
                     )
+                }
+            }
+
+            if showExternal {
+                ForEach(workspace.externalWorktrees) { worktree in
+                    ExternalWorktreeItem(worktree: worktree) { target in
+                        target.open(path: worktree.path)
+                    }
                 }
             }
         }
@@ -194,6 +203,51 @@ struct WorktreeItem: View {
         .padding(.vertical, 6)
         .contentShape(Rectangle())
         .onHover { isHovered = $0 }
+    }
+}
+
+struct ExternalWorktreeItem: View {
+    let worktree: ExternalWorktree
+    let onOpen: (OpenTarget) -> Void
+
+    @AppStorage("openTargetPrimary") private var primaryTarget: OpenTarget = .vscode
+
+    var body: some View {
+        HStack {
+            Color.clear
+                .frame(width: 16, height: 1)
+
+            Image("GitBranch")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundStyle(.quaternary)
+                .frame(width: 16)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(worktree.name)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                Text(worktree.branch)
+                    .font(.caption)
+                    .foregroundStyle(.quaternary)
+            }
+
+            Spacer()
+
+            Button {
+                onOpen(primaryTarget)
+            } label: {
+                Text("Open")
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+            }
+            .buttonStyle(.plain)
+            .background(.fill.quaternary)
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .controlSize(.small)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
     }
 }
 

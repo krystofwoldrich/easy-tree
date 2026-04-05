@@ -5,6 +5,7 @@ struct ContentView: View {
     @State private var store = WorkspaceStore()
     @State private var showError = false
     @State private var showArchived = false
+    @State private var showExternal = false
 
     var body: some View {
         ScrollView {
@@ -20,6 +21,7 @@ struct ContentView: View {
             ToolbarItem(placement: .automatic) {
                 Menu {
                     Toggle("Show Archived Worktrees", isOn: $showArchived.animation())
+                    Toggle("Show External Worktrees", isOn: $showExternal.animation())
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
@@ -72,6 +74,7 @@ struct ContentView: View {
                     workspace: $workspace,
                     isBusy: store.busyWorkspaceIDs.contains(workspace.id),
                     showArchived: showArchived,
+                    showExternal: showExternal,
                     onCreateWorktree: {
                         store.createWorktree(for: workspace)
                     },

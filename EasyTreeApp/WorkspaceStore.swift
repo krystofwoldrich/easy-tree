@@ -18,6 +18,7 @@ final class WorkspaceStore {
         self.storeFile = baseDirectory.appendingPathComponent("workspaces.json")
         load()
         refreshAllBranches()
+        refreshAllExternalWorktrees()
         startWatchingAll()
     }
 
@@ -130,6 +131,83 @@ final class WorkspaceStore {
         guard let index = workspaces.firstIndex(where: { $0.id == workspace.id }) else { return }
         workspaces[index].worktrees.removeAll { $0.id == worktree.id }
         save()
+    }
+
+    // MARK: - External Worktrees
+
+    private func refreshAllExternalWorktrees() {
+        for workspace in workspaces {
+            refreshExternalWorktrees(for: workspace)
+        }
+    }
+
+    func refreshExternalWorktrees(for workspace: AppWorkspace) {
+        let workspacePath = workspace.path
+        let workspaceID = workspace.id
+
+        Task.detached {
+            let externals = Self.detectExternalWorktrees(
+                repoPath: workspacePath,
+                managedPaths: workspace.worktrees.map(\.path)
+            )
+
+            await MainActor.run {
+                if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }) {
+                    self.workspaces[index].externalWorktrees = externals
+                }
+            }
+        }
+    }
+
+    nonisolated private static func detectExternalWorktrees(
+        repoPath: String,
+        managedPaths: [String]
+    ) -> [ExternalWorktree] {
+        guard
+            let output = try? GitShell(workingDirectory: URL(fileURLWithPath: repoPath))
+                .run("worktree", "list", "--porcelain")
+        else { return [] }
+
+        var result: [ExternalWorktree] = []
+        var currentPath: String?
+        var currentBranch: String?
+
+        for line in output.components(separatedBy: "\n") {
+            if line.hasPrefix("worktree ") {
+                currentPath = String(line.dropFirst("worktree ".count))
+                currentBranch = nil
+            } else if line.hasPrefix("branch refs/heads/") {
+                currentBranch = String(line.dropFirst("branch refs/heads/".count))
+            } else if line.isEmpty, let path = currentPath {
+                // Skip the main repo itself and managed worktrees
+                if path != repoPath && !managedPaths.contains(path) {
+                    let name = URL(fileURLWithPath: path).lastPathComponent
+                    result.append(
+                        ExternalWorktree(
+                            path: path,
+                            branch: currentBranch ?? "detached",
+                            name: name
+                        )
+                    )
+                }
+                currentPath = nil
+                currentBranch = nil
+            }
+        }
+
+        // Handle last entry if no trailing newline
+        if let path = currentPath, path != repoPath, !managedPaths.contains(path) {
+            let name = URL(fileURLWithPath: path).lastPathComponent
+            result.append(
+                ExternalWorktree(
+                    path: path,
+                    branch: currentBranch ?? "detached",
+                    name: name
+                )
+            )
+        }
+
+        return result
     }
 
     // MARK: - Branch Watching
