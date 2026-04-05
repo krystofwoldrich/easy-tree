@@ -4,21 +4,26 @@
     <title>EasyTree Updates</title>
     <language>en</language>
     <item>
-      <title>EasyTree 6e33073</title>
-      <pubDate>Sun, 29 Mar 2026 22:12:19 +0000</pubDate>
-      <sparkle:version>46</sparkle:version>
-      <sparkle:shortVersionString>6e33073</sparkle:shortVersionString>
+      <title>EasyTree c005ff6</title>
+      <pubDate>Sun, 05 Apr 2026 15:49:11 +0000</pubDate>
+      <sparkle:version>53</sparkle:version>
+      <sparkle:shortVersionString>c005ff6</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://github.com/krystofwoldrich/easy-tree/releases/download/6e33073/EasyTree-6e33073.zip"
+        url="https://github.com/krystofwoldrich/easy-tree/releases/download/c005ff6/EasyTree-c005ff6.zip"
         type="application/octet-stream"
-        sparkle:edSignature="qy3v662CXOJ7+Db/+SlXJpB8LC8r3Fzwa1yPdll/glyBKqPYuzDDpQBK9JueLcRXu2wZpg7/+hJm0F1K5oSFAA=="
-        length="5226711"
+        sparkle:edSignature="Ft+A2gTxaL/rgwhEPR2dHGFycEskFTCPBu1SEXbvq6VzoVa8+xQUa2ZfsEw6FnrXma4aEjv6Q0J/pFHf2/seAQ=="
+        length="5208051"
       />
       <description><![CDATA[
         <h2>Changes</h2>
-        <pre>- Add configurable default open targets via config file
-- Update appcast.xml for ffa9152</pre>
+        <pre>- Fix high CPU: separate external worktrees from workspace struct, use PNG icons
+- Fix high CPU: cache app icons and debounce file watchers
+- Show worktree path as primary text, branch name below
+- Show worktree path instead of branch under worktree name
+- Add dual open buttons to external worktrees
+- Show external worktrees not created by EasyTree
+- Update appcast.xml for 6e33073</pre>
       ]]></description>
     </item>
   </channel>
