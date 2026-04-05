@@ -75,6 +75,7 @@ struct ContentView: View {
                     isBusy: store.busyWorkspaceIDs.contains(workspace.id),
                     showArchived: showArchived,
                     showExternal: showExternal,
+                    externalWorktrees: store.externalWorktrees[workspace.id] ?? [],
                     onCreateWorktree: {
                         store.createWorktree(for: workspace)
                     },

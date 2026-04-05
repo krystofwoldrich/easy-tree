@@ -65,18 +65,6 @@ struct AppWorkspace: Identifiable, Codable {
     var primaryTarget: OpenTarget
     var secondaryTarget: OpenTarget
 
-    /// External worktrees detected via git but not managed by EasyTree. Not persisted.
-    var externalWorktrees: [ExternalWorktree] {
-        get { _externalWorktrees ?? [] }
-        set { _externalWorktrees = newValue }
-    }
-
-    private var _externalWorktrees: [ExternalWorktree]?
-
-    private enum CodingKeys: String, CodingKey {
-        case path, repoName, currentBranch, worktrees, primaryTarget, secondaryTarget
-    }
-
     init(
         path: String,
         repoName: String,

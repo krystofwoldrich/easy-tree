@@ -5,6 +5,7 @@ struct WorkspaceRow: View {
     let isBusy: Bool
     let showArchived: Bool
     let showExternal: Bool
+    let externalWorktrees: [ExternalWorktree]
     let onCreateWorktree: () -> Void
     let onOpenWorktree: (AppWorktree, OpenTarget) -> Void
     let onOpenWorkspace: (OpenTarget) -> Void
@@ -102,7 +103,7 @@ struct WorkspaceRow: View {
             }
 
             if showExternal {
-                ForEach(workspace.externalWorktrees) { worktree in
+                ForEach(externalWorktrees) { worktree in
                     ExternalWorktreeItem(
                         worktree: worktree,
                         defaultPrimary: workspace.primaryTarget,

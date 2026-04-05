@@ -8,6 +8,7 @@ final class WorkspaceStore {
     var workspaces: [AppWorkspace] = []
     var errorMessage: String?
     var busyWorkspaceIDs: Set<String> = []
+    var externalWorktrees: [String: [ExternalWorktree]] = [:]
 
     private let baseDirectory: URL
     private let storeFile: URL
@@ -152,9 +153,7 @@ final class WorkspaceStore {
             )
 
             await MainActor.run {
-                if let index = self.workspaces.firstIndex(where: { $0.id == workspaceID }) {
-                    self.workspaces[index].externalWorktrees = externals
-                }
+                self.externalWorktrees[workspaceID] = externals
             }
         }
     }
