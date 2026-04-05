@@ -103,9 +103,11 @@ struct WorkspaceRow: View {
 
             if showExternal {
                 ForEach(workspace.externalWorktrees) { worktree in
-                    ExternalWorktreeItem(worktree: worktree) { target in
-                        target.open(path: worktree.path)
-                    }
+                    ExternalWorktreeItem(
+                        worktree: worktree,
+                        defaultPrimary: workspace.primaryTarget,
+                        defaultSecondary: workspace.secondaryTarget
+                    )
                 }
             }
         }
@@ -208,9 +210,23 @@ struct WorktreeItem: View {
 
 struct ExternalWorktreeItem: View {
     let worktree: ExternalWorktree
-    let onOpen: (OpenTarget) -> Void
+    let defaultPrimary: OpenTarget
+    let defaultSecondary: OpenTarget
 
-    @AppStorage("openTargetPrimary") private var primaryTarget: OpenTarget = .vscode
+    @State private var primaryTarget: OpenTarget
+    @State private var secondaryTarget: OpenTarget
+
+    init(
+        worktree: ExternalWorktree,
+        defaultPrimary: OpenTarget,
+        defaultSecondary: OpenTarget
+    ) {
+        self.worktree = worktree
+        self.defaultPrimary = defaultPrimary
+        self.defaultSecondary = defaultSecondary
+        _primaryTarget = State(initialValue: defaultPrimary)
+        _secondaryTarget = State(initialValue: defaultSecondary)
+    }
 
     var body: some View {
         HStack {
@@ -234,17 +250,16 @@ struct ExternalWorktreeItem: View {
 
             Spacer()
 
-            Button {
-                onOpen(primaryTarget)
-            } label: {
-                Text("Open")
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-            }
-            .buttonStyle(.plain)
-            .background(.fill.quaternary)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-            .controlSize(.small)
+            OpenSplitButton(
+                target: $primaryTarget,
+                onSave: {},
+                action: { target in target.open(path: worktree.path) }
+            )
+            OpenSplitButton(
+                target: $secondaryTarget,
+                onSave: {},
+                action: { target in target.open(path: worktree.path) }
+            )
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
